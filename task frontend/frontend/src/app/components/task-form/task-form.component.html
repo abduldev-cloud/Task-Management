@@ -1,0 +1,88 @@
+<div class="task-form-wrapper">
+<div class="task-form-container">
+  <h2>{{ isEditMode ? 'Update Task' : 'Create Task' }}</h2>
+
+  <form (ngSubmit)="onSubmit()">
+    <label>Title</label>
+    <input type="text" [(ngModel)]="task.title" name="title" [disabled]="isEditMode" required />
+
+    <label>Description</label>
+    <textarea [(ngModel)]="task.description" name="description" [disabled]="isEditMode" required></textarea>
+
+    
+    <div *ngIf="!isEditMode">
+  <label>Due Date</label>
+  <input type="date" [(ngModel)]="task.due_date" name="due_date" />
+</div>
+
+    <div *ngIf="isEditMode">
+  <label>Due Date</label>
+  <input type="date" [value]="task.due_date | date:'yyyy-MM-dd'" disabled />
+</div>
+
+    <label>Status</label>
+    <select [(ngModel)]="task.status" name="status">
+      <option value="pending">Pending</option>
+      <option value="in_progress">In Progress</option>
+      <option value="completed">Completed</option>
+      <option *ngIf="isAdmin" value="approved">Approved</option>
+    </select>
+
+
+
+<div *ngIf="task.status === 'completed'">
+  <label>Completed Date</label>
+
+  <input
+    type="date"
+    *ngIf="!task.completed_date"
+    [(ngModel)]="task.completed_date"
+    name="completed_date"
+  />
+
+  <input
+    type="date"
+    *ngIf="task.completed_date"
+    [value]="task.completed_date | date:'yyyy-MM-dd'"
+    disabled
+  />
+</div>
+
+
+<!-- Show file upload only if task is completed AND no existing attachment -->
+<div *ngIf="task.status === 'completed' && !task.attachment">
+  <label>Upload Attachment</label>
+  <input type="file" (change)="onFileSelected($event)" />
+  
+</div>
+
+<!-- Show link to existing attachment if already uploaded -->
+<!-- <div *ngIf="task.status === 'completed' && task.attachment">
+  <label>Existing Attachment:</label>
+  <a
+  *ngIf="task.attachment"
+  [href]="'http://localhost:3000/uploads/attachments/' + task.attachment"
+  target="_blank"
+  rel="noopener"
+>
+  {{ task.attachment }}
+</a> -->
+<!-- </div> -->
+
+<a *ngIf="task.attachment"
+   [href]="'http://localhost:3000/uploads/attachments/' + task.attachment"
+   target="_blank">
+   View Attachment
+</a>
+
+    <div *ngIf="!isEditMode">
+  <label>Assign To</label>
+  <select [(ngModel)]="task.assigned_to" name="assigned_to" required>
+    <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+  </select>
+</div>
+    
+    <button type="submit" [disabled]="isAttachmentUploaded ">{{ isEditMode ? 'Update Task' : 'Create Task' }}</button>
+  </form>
+</div>
+</div>

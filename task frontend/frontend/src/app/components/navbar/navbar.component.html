@@ -1,0 +1,133 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <!-- App Logo or Links -->
+    <h3>Task Manager</h3>
+  </div>
+
+   <div class="user-details">
+        <div class="user-name">{{ user?.name }}</div>
+        <div class="user-email">{{ user?.email }}</div>
+    </div>
+
+  <div class="navbar-right">
+    
+    
+    <!-- <div class="notification-bell" (click)="toggleNotifications()">
+    <i class="fa fa-bell"></i>
+     <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+</div> -->
+
+<!-- <div class="notification-dropdown" *ngIf="showNotifications">
+  <div *ngIf="notifications.length === 0" class="empty">No new notifications</div>
+    <div *ngFor="let n of notifications" class="notif-item" [class.unread]="!n.is_read">
+      {{ n.message }}
+      <span class="time">{{ n.created_at | date:'short' }}</span>
+    </div>
+    <button (click)="markAllRead()">Mark all read</button>
+</div>
+
+<div class="nav-icons">
+  
+  <div class="relative">
+    <button class = "icon-btn">
+      <lucide-icon name="bell" class="w-6 h-6 text-gray-700 cursor-pointer hover:text-blue-500"></lucide-icon>
+    </button>
+    <span
+      *ngIf="notifications.length > 0"
+      class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5"
+    >
+      {{ notifications.length }}
+      
+    </span>
+    
+  </div>
+
+</div> -->
+
+<div class="nav-icons">
+  <div class="relative">
+    <!-- Notification Bell Button -->
+    <button class="icon-btn" (click)="toggleNotifications()">
+      <lucide-icon
+        name="bell"
+        class="w-6 h-6 text-gray-700 cursor-pointer hover:text-blue-500"
+      ></lucide-icon>
+
+      <!-- Red Badge (Unread Count) -->
+      <span
+        *ngIf="unreadCount > 0"
+        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5"
+      >
+        {{ unreadCount }}
+      </span>
+    </button>
+
+    <!-- Notification Dropdown -->
+    <div
+      class="notification-dropdown"
+      *ngIf="showNotifications"
+    >
+      <div *ngIf="notifications.length === 0" class="empty">
+        No new notifications
+      </div>
+
+      <div
+        *ngFor="let n of notifications"
+        class="notif-item"
+        [class.unread]="!n.is_read"
+      >
+        <div class="message">{{ n.message }}</div>
+        <span class="time">{{ n.created_at | date: 'short' }}</span>
+      </div>
+
+      <button class="mark-btn" (click)="markAllRead()">
+        Mark all read
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="profile-container" (click)="toggleDropdown()">
+    <img 
+      *ngIf="user.profile_picture"
+      [src]="'http://localhost:3000/uploads/' + user.profile_picture" 
+      alt="Profile Picture" 
+      width="50" height="50" style="border-radius:50%;" />
+    </div>
+
+
+<!-- Profile Dialog Box (inside Navbar Component) -->
+<div class="profile-dialog-backdrop" *ngIf="showDropdown" (click)="toggleDropdown()"></div>
+<div class="profile-dialog" *ngIf="showDropdown">
+  <div class="dialog-header">
+    <h3>Profile</h3>
+    <button class="close-btn" (click)="toggleDropdown()">✕</button>
+  </div>
+
+  <div class="dialog-body">
+    <img
+      *ngIf="user.profile_picture"
+      [src]="'http://localhost:3000/uploads/' + user.profile_picture"
+      alt="Profile"
+      class="profile-pic-large"
+    />
+    <h4>{{ user?.name }}</h4>
+    <p>{{ user?.email }}</p>
+
+    <hr />
+
+    <!-- Upload Section -->
+    <form (ngSubmit)="uploadProfilePic()" enctype="multipart/form-data" class="upload-form">
+      <input type="file" id="profileFile" (change)="onFileSelected($event)" hidden />
+      <label for="profileFile" class="upload-btn">Choose File</label>
+      <button type="submit" class = "submit-btn" [disabled]="!selectedFile">Upload</button>
+    </form>
+
+    <hr />
+
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+</div>
+
+  </div>
+</nav>

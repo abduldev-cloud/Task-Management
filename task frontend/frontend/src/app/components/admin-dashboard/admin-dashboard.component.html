@@ -1,0 +1,76 @@
+<!-- dashboard.component.html -->
+
+<!-- <app-sidebar></app-sidebar> -->
+
+<div class="dashboard-wrapper">
+
+  <div class="dashboard-clock-container">
+  <div class="dashboard-clock">
+    🕒 {{ currentTime | date: 'mediumTime' }}
+  </div>
+</div>
+
+  <div class="dashboard-grid">
+
+    <div class="card stats">
+      <h3>Total Tasks</h3>
+      <p>{{ stats.total }}</p>
+    </div>
+
+    <div class="card stats">
+      <h3>Completed</h3>
+      <p>{{ stats.completed }}</p>
+    </div>
+
+    <div class="card stats">
+      <h3>Pending</h3>
+      <p>{{ stats.pending }}</p>
+    </div>
+
+    <!-- <div class="card stats">
+      <h3>Total Tasks Assigned</h3>
+      <p>{{ stats.assignedByAdmin }}</p>
+    </div> -->
+
+  </div>
+
+  <div class="actions">
+    <button routerLink="/admin-task-list">Go to Task</button>
+    <button class="create-task-btn" (click)="goToCreateTask()">Create Task</button>
+  </div>
+
+  <!-- 🟡 Moved chart-container INSIDE dashboard-wrapper -->
+  <div class="chart-container">
+    <canvas baseChart
+      [data]="pieChartData"
+      [type]="'pie'"
+      [options]="pieChartOptions"
+      [legend]="true">
+    </canvas>
+  </div>
+
+  <div class="hill-chart-section">
+  <h3>Task Status Progress</h3>
+  <div class="hill-bars">
+    <div class="hill-bar">
+      <div class="hill completed"  [title]="getPercentage(stats.completed) + '%'" [style.height.%]="getPercentage(stats.completed)"></div>
+      <label>Completed</label>
+      <span>{{ getPercentage(stats.completed) }}%</span>
+    </div>
+    <div class="hill-bar">
+      <div class="hill pending" [style.height.%]="getPercentage(stats.pending)"></div>
+      <label>Pending</label>
+      <span>{{ getPercentage(stats.pending) }}%</span>
+    </div>
+    <!-- <div class="hill-bar">
+      <div class="hill assigned" [style.height.%]="getPercentage(stats.assignedByAdmin)"></div>
+      <label>Assigned</label>
+      <span>{{ getPercentage(stats.assignedByAdmin) }}%</span> 
+    </div> -->
+  </div>
+
+  
+</div>
+
+
+</div>
