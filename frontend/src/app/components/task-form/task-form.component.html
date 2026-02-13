@@ -1,0 +1,81 @@
+<div class="main-content">
+  <div class="form-page">
+    <div class="form-card">
+      <div class="form-card-header">
+        <h2>{{ isEditMode ? 'Update Task' : 'Create New Task' }}</h2>
+        <p class="form-subtitle">{{ isEditMode ? 'Modify the task details below' : 'Fill in the details to assign a new
+          task' }}</p>
+      </div>
+
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" [(ngModel)]="task.title" name="title" [disabled]="isEditMode"
+            placeholder="Enter task title" required />
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="task.description" name="description" [disabled]="isEditMode"
+            placeholder="Describe the task in detail" required></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" *ngIf="!isEditMode">
+            <label>Due Date</label>
+            <input type="date" [(ngModel)]="task.due_date" name="due_date" />
+          </div>
+          <div class="form-group" *ngIf="isEditMode">
+            <label>Due Date</label>
+            <input type="date" [value]="task.due_date | date:'yyyy-MM-dd'" disabled />
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select [(ngModel)]="task.status" name="status">
+              <option value="pending">Pending</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option *ngIf="isAdmin" value="approved">Approved</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="task.status === 'completed'">
+          <label>Completed Date</label>
+          <input type="date" *ngIf="!task.completed_date" [(ngModel)]="task.completed_date" name="completed_date" />
+          <input type="date" *ngIf="task.completed_date" [value]="task.completed_date | date:'yyyy-MM-dd'" disabled />
+        </div>
+
+        <div class="form-group" *ngIf="task.status === 'completed' && !task.attachment">
+          <label>Upload Attachment</label>
+          <div class="file-upload-area">
+            <input type="file" id="fileUpload" (change)="onFileSelected($event)" hidden />
+            <label for="fileUpload" class="file-upload-label">
+              <lucide-icon name="paperclip" [size]="18"></lucide-icon>
+              <span>Choose a file to attach</span>
+            </label>
+          </div>
+        </div>
+
+        <a *ngIf="task.attachment" [href]="'http://localhost:3000/uploads/attachments/' + task.attachment"
+          target="_blank" class="attachment-link">
+          <lucide-icon name="paperclip" [size]="14"></lucide-icon>
+          View Attachment
+        </a>
+
+        <div class="form-group" *ngIf="!isEditMode">
+          <label>Assign To</label>
+          <select [(ngModel)]="task.assigned_to" name="assigned_to" required>
+            <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
+          </select>
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="isAttachmentUploaded">
+          <lucide-icon [name]="isEditMode ? 'check-circle' : 'plus'" [size]="18"></lucide-icon>
+          {{ isEditMode ? 'Update Task' : 'Create Task' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

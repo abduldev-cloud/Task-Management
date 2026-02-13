@@ -1,0 +1,11 @@
+/* App Layout */
+.main-wrapper {
+    min-height: 100vh;
+    transition: margin-left var(--transition-base);
+}
+
+/* When navbar + sidebar are visible, offset the main content */
+:host-context(app-navbar)~.main-wrapper,
+app-root .main-wrapper {
+    padding-top: 0;
+}

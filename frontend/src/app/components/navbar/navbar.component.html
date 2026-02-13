@@ -1,0 +1,108 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <h3 class="brand">
+      <span class="brand-icon">
+        <lucide-icon name="activity" [size]="22"></lucide-icon>
+      </span>
+      TaskFlow
+    </h3>
+  </div>
+
+  <div class="navbar-center">
+    <div class="search-box">
+      <lucide-icon name="search" [size]="16" class="search-icon"></lucide-icon>
+      <input type="text" placeholder="Search tasks..." class="search-input" />
+    </div>
+  </div>
+
+  <div class="navbar-right">
+    <!-- Notifications -->
+    <div class="nav-icons">
+      <div class="icon-wrapper">
+        <button class="icon-btn" (click)="toggleNotifications()" aria-label="Notifications">
+          <lucide-icon name="bell" [size]="20"></lucide-icon>
+          <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+        </button>
+
+        <div class="notification-dropdown" *ngIf="showNotifications">
+          <div class="dropdown-header">
+            <h4>Notifications</h4>
+            <button class="mark-btn" (click)="markAllRead()" *ngIf="notifications.length > 0">Mark all read</button>
+          </div>
+          <div class="dropdown-body">
+            <div *ngIf="notifications.length === 0" class="empty-state">
+              <lucide-icon name="bell" [size]="32" class="empty-icon"></lucide-icon>
+              <p>No new notifications</p>
+            </div>
+            <div *ngFor="let n of notifications" class="notif-item" [class.unread]="!n.is_read">
+              <div class="notif-dot" *ngIf="!n.is_read"></div>
+              <div class="notif-content">
+                <p class="notif-message">{{ n.message }}</p>
+                <span class="notif-time">{{ n.created_at | date: 'short' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Info -->
+    <div class="user-details">
+      <span class="user-name">{{ user?.name }}</span>
+      <span class="user-email">{{ user?.email }}</span>
+    </div>
+
+    <!-- Profile Avatar -->
+    <div class="profile-container" (click)="toggleDropdown()">
+      <img *ngIf="user?.profile_picture" [src]="'http://localhost:3000/uploads/' + user.profile_picture"
+        alt="Profile Picture" class="avatar-img" />
+      <div *ngIf="!user?.profile_picture" class="avatar-fallback">
+        <lucide-icon name="user" [size]="20"></lucide-icon>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Profile Dialog Backdrop -->
+<div class="profile-dialog-backdrop" *ngIf="showDropdown" (click)="toggleDropdown()"></div>
+
+<!-- Profile Dialog -->
+<div class="profile-dialog" *ngIf="showDropdown">
+  <div class="dialog-header">
+    <h3>Profile</h3>
+    <button class="close-btn" (click)="toggleDropdown()">
+      <lucide-icon name="x" [size]="18"></lucide-icon>
+    </button>
+  </div>
+
+  <div class="dialog-body">
+    <div class="dialog-avatar">
+      <img *ngIf="user?.profile_picture" [src]="'http://localhost:3000/uploads/' + user.profile_picture" alt="Profile"
+        class="profile-pic-large" />
+      <div *ngIf="!user?.profile_picture" class="avatar-fallback-lg">
+        <lucide-icon name="user" [size]="36"></lucide-icon>
+      </div>
+    </div>
+    <h4>{{ user?.name }}</h4>
+    <p class="dialog-email">{{ user?.email }}</p>
+
+    <div class="dialog-divider"></div>
+
+    <!-- Upload Section -->
+    <form (ngSubmit)="uploadProfilePic()" enctype="multipart/form-data" class="upload-form">
+      <input type="file" id="profileFile" (change)="onFileSelected($event)" hidden />
+      <label for="profileFile" class="upload-btn">
+        <lucide-icon name="upload" [size]="14"></lucide-icon>
+        Choose Photo
+      </label>
+      <button type="submit" class="submit-btn" [disabled]="!selectedFile">Upload</button>
+    </form>
+
+    <div class="dialog-divider"></div>
+
+    <button class="logout-btn" (click)="logout()">
+      <lucide-icon name="log-out" [size]="16"></lucide-icon>
+      Logout
+    </button>
+  </div>
+</div>
