@@ -1,0 +1,26 @@
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-logo">
+      <lucide-icon name="activity" [size]="24"></lucide-icon>
+    </div>
+    <span class="brand-text">TaskFlow</span>
+  </div>
+
+  <nav class="nav-links">
+    <a *ngIf="dashboardLink" [routerLink]="dashboardLink" routerLinkActive="active">
+      <lucide-icon name="layout-dashboard" [size]="20"></lucide-icon>
+      <span>Dashboard</span>
+    </a>
+    <a routerLink="/tasks" routerLinkActive="active">
+      <lucide-icon name="list-todo" [size]="20"></lucide-icon>
+      <span>All Tasks</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="theme-toggle-btn" (click)="toggleDarkMode()">
+      <lucide-icon [name]="isDarkMode ? 'sun' : 'moon'" [size]="18"></lucide-icon>
+      <span>{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,107 @@
+<div class="main-content">
+  <!-- User Task List -->
+  <div class="task-list-wrapper" *ngIf="!isAdmin">
+    <div class="page-header">
+      <div>
+        <h1>My Tasks</h1>
+        <p class="page-subtitle">Track and manage your assigned tasks</p>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <lucide-icon name="filter" [size]="16"></lucide-icon>
+        <label for="statusFilter">Filter:</label>
+        <select id="statusFilter" [(ngModel)]="selectedStatus" (change)="applyStatusFilter()">
+          <option value="all">All Tasks</option>
+          <option value="pending">Pending</option>
+          <option value="in_progress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="task-grid">
+      <div class="task-card" *ngFor="let task of filteredTasks" (click)="editTask(task)">
+        <div class="task-card-header">
+          <h3>{{ task.title }}</h3>
+          <span class="status-badge" [ngClass]="getStatusClass(task.status)">{{ task.status }}</span>
+        </div>
+        <p class="task-description">{{ task.description }}</p>
+        <div class="task-meta">
+          <div class="meta-item">
+            <lucide-icon name="calendar" [size]="14"></lucide-icon>
+            <span>Due: {{ task.due_date | date }}</span>
+          </div>
+          <div class="meta-item">
+            <lucide-icon name="clock" [size]="14"></lucide-icon>
+            <span>Created: {{ task.created_at | date:'short' }}</span>
+          </div>
+        </div>
+        <div class="task-card-footer">
+          <button class="edit-btn" (click)="editTask(task); $event.stopPropagation()">
+            <lucide-icon name="edit" [size]="14"></lucide-icon>
+            Edit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredTasks.length === 0">
+      <lucide-icon name="clipboard-list" [size]="48"></lucide-icon>
+      <h3>No tasks found</h3>
+      <p>Try changing the filter or check back later.</p>
+    </div>
+  </div>
+
+  <!-- Admin View -->
+  <div class="admin-view" *ngIf="isAdmin">
+    <div class="page-header">
+      <div>
+        <h1>All Tasks</h1>
+        <p class="page-subtitle">Admin overview — view tasks by team member</p>
+      </div>
+    </div>
+
+    <div class="user-grid">
+      <div class="user-card" *ngFor="let user of usersWithTasks" (click)="selectUser(user)"
+        [class.selected]="selectedUser === user">
+        <div class="user-avatar">
+          <lucide-icon name="user" [size]="20"></lucide-icon>
+        </div>
+        <h3>{{ user.user_name }}</h3>
+        <span class="task-count">{{ user.tasks.length }} tasks</span>
+      </div>
+    </div>
+
+    <div class="task-section" *ngIf="selectedUser">
+      <h3 class="section-title">
+        <lucide-icon name="file-text" [size]="18"></lucide-icon>
+        {{ selectedUser.user_name }}'s Tasks
+      </h3>
+      <div class="task-card" *ngFor="let task of selectedUser.tasks">
+        <div class="task-card-header">
+          <h4>{{ task.title }}</h4>
+          <span class="status-badge" [ngClass]="{
+              'status-pending': task.status === 'pending',
+              'status-completed': task.status === 'completed',
+              'status-in_progress': task.status === 'In Progress'
+            }">
+            {{ task.status }}
+          </span>
+        </div>
+        <p class="task-description">{{ task.description }}</p>
+        <div class="task-meta">
+          <div class="meta-item">
+            <lucide-icon name="calendar" [size]="14"></lucide-icon>
+            <span>Due: {{ task.due_date | date }}</span>
+          </div>
+          <div class="meta-item">
+            <lucide-icon name="clock" [size]="14"></lucide-icon>
+            <span>Created: {{ task.created_at | date:'short' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

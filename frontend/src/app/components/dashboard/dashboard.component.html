@@ -1,0 +1,72 @@
+<div class="main-content">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1>Dashboard</h1>
+      <p class="page-subtitle">Welcome back! Here's your task overview.</p>
+    </div>
+    <div class="clock-pill">
+      <lucide-icon name="clock" [size]="14"></lucide-icon>
+      {{ currentTime | date: 'mediumTime' }}
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card stat-total">
+      <div class="stat-icon-wrapper total-icon">
+        <lucide-icon name="clipboard-list" [size]="22"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Total Tasks</span>
+        <span class="stat-value">{{ stats.total }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-completed">
+      <div class="stat-icon-wrapper completed-icon">
+        <lucide-icon name="check-circle" [size]="22"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Completed</span>
+        <span class="stat-value">{{ stats.completed }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-pending">
+      <div class="stat-icon-wrapper pending-icon">
+        <lucide-icon name="clock" [size]="22"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Pending</span>
+        <span class="stat-value">{{ stats.pending }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card stat-assigned" *ngIf="isAdmin">
+      <div class="stat-icon-wrapper assigned-icon">
+        <lucide-icon name="users" [size]="22"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Tasks Assigned</span>
+        <span class="stat-value">{{ stats.assignedByAdmin }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions-bar">
+    <button class="action-btn primary" routerLink="/tasks">
+      <lucide-icon name="list-todo" [size]="18"></lucide-icon>
+      View All Tasks
+    </button>
+    <button class="action-btn accent" *ngIf="isAdmin" routerLink="/task-form">
+      <lucide-icon name="plus" [size]="18"></lucide-icon>
+      Create New Task
+    </button>
+  </div>
+
+  <ng-template #loadingBlock>
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>Loading Dashboard...</p>
+    </div>
+  </ng-template>
+</div>

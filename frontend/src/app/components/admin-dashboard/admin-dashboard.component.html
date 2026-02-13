@@ -1,0 +1,86 @@
+<div class="main-content">
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1>Admin Dashboard</h1>
+      <p class="page-subtitle">Overview of all tasks and team performance.</p>
+    </div>
+    <div class="clock-pill">
+      <lucide-icon name="clock" [size]="14"></lucide-icon>
+      {{ currentTime | date: 'mediumTime' }}
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon-wrapper total-icon">
+        <lucide-icon name="clipboard-list" [size]="22"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Total Tasks</span>
+        <span class="stat-value">{{ stats.total }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon-wrapper completed-icon">
+        <lucide-icon name="check-circle" [size]="22"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Completed</span>
+        <span class="stat-value">{{ stats.completed }}</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon-wrapper pending-icon">
+        <lucide-icon name="clock" [size]="22"></lucide-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">Pending</span>
+        <span class="stat-value">{{ stats.pending }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions-bar">
+    <button class="action-btn primary" routerLink="/admin-task-list">
+      <lucide-icon name="list-todo" [size]="18"></lucide-icon>
+      View All Tasks
+    </button>
+    <button class="action-btn accent" (click)="goToCreateTask()">
+      <lucide-icon name="plus" [size]="18"></lucide-icon>
+      Create Task
+    </button>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-section">
+    <div class="chart-card">
+      <h3 class="section-title">Task Distribution</h3>
+      <div class="chart-wrapper">
+        <canvas baseChart [data]="pieChartData" [type]="'pie'" [options]="pieChartOptions" [legend]="true">
+        </canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3 class="section-title">Task Status Progress</h3>
+      <div class="hill-bars">
+        <div class="hill-bar">
+          <div class="hill-track">
+            <div class="hill-fill completed-fill" [style.height.%]="getPercentage(stats.completed)"></div>
+          </div>
+          <span class="hill-label">Completed</span>
+          <span class="hill-value">{{ getPercentage(stats.completed) }}%</span>
+        </div>
+        <div class="hill-bar">
+          <div class="hill-track">
+            <div class="hill-fill pending-fill" [style.height.%]="getPercentage(stats.pending)"></div>
+          </div>
+          <span class="hill-label">Pending</span>
+          <span class="hill-value">{{ getPercentage(stats.pending) }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
