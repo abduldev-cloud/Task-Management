@@ -11,7 +11,7 @@ export class SidebarComponent implements OnInit {
   // dashboardLink = '/dashboard'; // default
   userRole = ''; // helpful for debug or conditional display
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;
@@ -20,16 +20,15 @@ export class SidebarComponent implements OnInit {
 
   dashboardLink = '';
 
-ngOnInit(): void {
-  this.authService.getProfile().subscribe({
-    next: (user: any) => {
-      console.log('User Info:', user);
-      this.dashboardLink = user.role === 'admin' ? '/admin-dashboard' : '/dashboard';
-    },
-    error: () => {
-      this.dashboardLink = '/dashboard';
-    }
-  });
-}
+  ngOnInit(): void {
+    this.authService.getProfile().subscribe({
+      next: (user: any) => {
+        this.dashboardLink = user.role === 'admin' ? '/admin-dashboard' : '/dashboard';
+      },
+      error: () => {
+        this.dashboardLink = '/dashboard';
+      }
+    });
+  }
 
 }
