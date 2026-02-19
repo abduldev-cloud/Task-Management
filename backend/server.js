@@ -12,11 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/tasks', taskRoutes);  
-app.use('/api/tasks', require('./routes/tasks'));
+app.use('/api/tasks', taskRoutes);
 app.use('/api/users', require('./routes/users'));
-// app.use('/uploads/attachments', express.static('uploads/attachments'));
-// app.use('/uploads', express.static('uploads'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads/profile_pictures')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
