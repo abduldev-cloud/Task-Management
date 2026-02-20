@@ -10,7 +10,7 @@ import { Task } from '../models/task.model';  // ensure this file exists and has
 export class TaskService {
   private apiUrl = 'http://localhost:3000/api/tasks';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private getAuthHeaders() {
     const token = localStorage.getItem('token');
@@ -21,7 +21,7 @@ export class TaskService {
     };
   }
 
-   getTasks(): Observable<any[]> {
+  getTasks(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
 
@@ -40,16 +40,16 @@ export class TaskService {
   //   return this.http.post<Task>(this.apiUrl, task, this.getAuthHeaders());
   // }
 
-  createTask(taskData: FormData):Observable<any>{
-    return  this.http.post(`${this.apiUrl}/tasks`,taskData);
+  createTask(taskData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/tasks`, taskData, this.getAuthHeaders());
   }
 
   // updateTask(id: number, taskData: any): Observable<Task> {
   //   return this.http.put<Task>(`${this.apiUrl}/${id}`, taskData, this.getAuthHeaders());
   // }
 
-  updateTask(id: number,taskData: FormData):Observable<any> {
-    return this.http.put(`${this.apiUrl}/tasks/${id}`,taskData);
+  updateTask(id: number, taskData: FormData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/tasks/${id}`, taskData, this.getAuthHeaders());
   }
 
   deleteTask(id: number): Observable<any> {
@@ -57,12 +57,12 @@ export class TaskService {
   }
 
   getUsersWithTasks() {
-  return this.http.get<any[]>(`${this.apiUrl}/admin/users-with-tasks`);
-}
+    return this.http.get<any[]>(`${this.apiUrl}/admin/users-with-tasks`);
+  }
 
-getRecentActivities() {
-  return this.http.get<any>('/api/admin/recent-activities');
-}
+  getRecentActivities() {
+    return this.http.get<any>('/api/admin/recent-activities');
+  }
 
 
 
