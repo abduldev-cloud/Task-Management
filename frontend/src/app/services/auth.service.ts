@@ -10,11 +10,11 @@ import { jwtDecode } from 'jwt-decode'; // ✅ CORRECT
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/auth`;
+  private apiUrl = `${environment.apiUrl}/api/auth`;
   private baseUrl = `${environment.apiUrl}`;
   private userRole: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   // ✅ Login API
   login(credentials: { email: string, password: string }): Observable<any> {
@@ -91,11 +91,11 @@ export class AuthService {
   }
 
   uploadProfilePicture(formData: FormData) {
-  return this.http.put<any>(`${this.apiUrl}/upload-profile-picture`, formData, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-}
+    return this.http.put<any>(`${this.apiUrl}/upload-profile-picture`, formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+  }
 
 }
