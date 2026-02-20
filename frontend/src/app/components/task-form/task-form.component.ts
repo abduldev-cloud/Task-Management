@@ -3,7 +3,7 @@ import { TaskService } from 'src/app/services/task.service';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import {ActivatedRoute} from '@angular/router';  
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-task-form',
@@ -34,8 +34,8 @@ export class TaskFormComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private authService: AuthService,
-    private route : ActivatedRoute
-  ) {}
+    private route: ActivatedRoute
+  ) { }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -53,7 +53,7 @@ export class TaskFormComponent implements OnInit {
       //  Store previously saved attachment
       this.savedAttachment = existingTask.attachment;
     }
-    else{
+    else {
       this.isEditMode = false;
     }
 
@@ -69,40 +69,41 @@ export class TaskFormComponent implements OnInit {
 
   onSubmit() {
     const formdata = new FormData();
-    formdata.append('title',this.task.title);
-    formdata.append('description',this.task.description);
-    formdata.append('assigned_to',this.task.assigned_to);
-    formdata.append('status',this.task.status);
-    formdata.append('due_date',this.task.due_date);
-    
-    if(this.attachmentFile)
-    {
-      formdata.append('attachment',this.attachmentFile);
+    formdata.append('title', this.task.title);
+    formdata.append('description', this.task.description);
+    formdata.append('assigned_to', this.task.assigned_to);
+    formdata.append('status', this.task.status);
+    formdata.append('due_date', this.task.due_date);
+
+    if (this.attachmentFile) {
+      formdata.append('attachment', this.attachmentFile);
     }
 
 
     if (this.isEditMode) {
-      this.taskService.updateTask(this.task.id,formdata).subscribe({
+      this.taskService.updateTask(this.task.id, formdata).subscribe({
         next: () => {
           this.isAttachmentUploaded = true;
           alert('Task Updated Successfully');
           this.router.navigate(['/tasks']);
         },
         error: (err) => {
-        console.error('Update Error:', err);
-      }
+          console.error('Update Error:', err);
+          alert('Failed to update task: ' + (err.error?.message || err.message || 'Unknown error'));
+        }
       });
     } else {
 
-       this.taskService.createTask(formdata).subscribe({
-      next: () => {
-        alert('Task created successfully!');
-        this.router.navigate(['/tasks']);  // ✅ Navigate after creating
-      },
-      error: (err) => {
-        console.error('Create Error:', err);
-      }
-    });
+      this.taskService.createTask(formdata).subscribe({
+        next: () => {
+          alert('Task created successfully!');
+          this.router.navigate(['/tasks']);  // ✅ Navigate after creating
+        },
+        error: (err) => {
+          console.error('Create Error:', err);
+          alert('Failed to create task: ' + (err.error?.message || err.message || 'Unknown error'));
+        }
+      });
     }
   }
 }
