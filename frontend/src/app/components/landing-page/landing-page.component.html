@@ -1,0 +1,104 @@
+<div class="landing-container">
+    <!-- Navbar Section -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <div class="logo" (click)="scrollToSection('hero')">
+                <span class="logo-text">TaskFlow</span>
+                <div class="logo-dot"></div>
+            </div>
+            <div class="nav-links">
+                <a class="nav-link" (click)="scrollToSection('features')">Features</a>
+                <a class="nav-link" (click)="scrollToSection('stats')">About</a>
+                <button class="nav-btn login-link" (click)="navigateToLogin()">Login</button>
+                <button class="nav-btn register-btn" (click)="navigateToRegister()">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">New: Intelligent Task Scheduling ✨</div>
+            <h1 class="hero-title">
+                Simplify your <span class="highlight">Productivity</span> Journey.
+            </h1>
+            <p class="hero-description">
+                The ultimate workspace to manage, track, and collaborate on your tasks. Boost your team's efficiency
+                with our intuitive dashboard and real-time insights.
+            </p>
+            <div class="hero-actions">
+                <button class="hero-btn primary-btn" (click)="navigateToRegister()">Start for Free</button>
+                <button class="hero-btn secondary-btn" (click)="navigateToLogin()">Watch Demo</button>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="visual-wrapper">
+                <img src="assets/dashboard-illustration.png" alt="Task Dashboard Mockup" class="hero-img">
+                <div class="glow-effect"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section class="stats-section" id="stats">
+        <div class="stat-card">
+            <div class="stat-value">15k+</div>
+            <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-card">
+            <div class="stat-value">250k+</div>
+            <div class="stat-label">Tasks Completed</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-card">
+            <div class="stat-value">99%</div>
+            <div class="stat-label">Satisfaction Rate</div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="section-header">
+            <h2 class="section-title">Everything you need to <span class="highlight">Conquer</span> your day.</h2>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <lucide-icon name="layout-dashboard" class="feature-icon"></lucide-icon>
+                </div>
+                <h3 class="feature-name">Dynamic Dashboard</h3>
+                <p class="feature-text">Keep track of everything at a glance with our intuitive, interactive dashboard
+                    visuals.</p>
+            </div>
+            <div class="feature-card highlighted">
+                <div class="feature-icon-wrapper">
+                    <lucide-icon name="users" class="feature-icon"></lucide-icon>
+                </div>
+                <h3 class="feature-name">Team Collaboration</h3>
+                <p class="feature-text">Assign tasks and track team progress in real-time. Stay aligned effortlessly.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <lucide-icon name="bell" class="feature-icon"></lucide-icon>
+                </div>
+                <h3 class="feature-name">Smart Notifications</h3>
+                <p class="feature-text">Never miss a deadline. Get intelligent alerts for upcoming and overdue tasks.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="landing-footer">
+        <div class="footer-content">
+            <div class="footer-logo">TaskFlow</div>
+            <p class="copyright">© 2026 TaskFlow Inc. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+</div>

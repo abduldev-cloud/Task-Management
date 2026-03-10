@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +16,8 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         const url = event.urlAfterRedirects;
 
-        // Hide navbar on login/register pages
-        this.showNavbar = !['/login', '/register'].includes(url);
+        // Hide navbar on login/register/landing pages
+        this.showNavbar = !['/login', '/register', '/', ''].includes(url);
 
         // Check token validity when navigation ends
         this.checkTokenAndRedirect(url);
@@ -26,7 +26,7 @@ export class AppComponent {
       // Prevent forward navigation after logout (browser forward button)
       if (event instanceof NavigationStart) {
         const token = localStorage.getItem('token');
-        if (!token && !['/login', '/register'].includes(event.url)) {
+        if (!token && !['/login', '/register', '/', ''].includes(event.url)) {
           this.router.navigate(['/login']);
         }
       }
@@ -35,7 +35,7 @@ export class AppComponent {
     // Handle manual browser navigation (Back/Forward)
     window.addEventListener('popstate', () => {
       const token = localStorage.getItem('token');
-      if (!token) {
+      if (!token && !['/login', '/register', '/', ''].includes(window.location.pathname)) {
         this.router.navigate(['/login']);
       }
     });
@@ -58,7 +58,7 @@ export class AppComponent {
       } catch {
         this.handleInvalidToken();
       }
-    } else if (!['/login', '/register'].includes(currentUrl)) {
+    } else if (!['/login', '/register', '/', ''].includes(currentUrl)) {
       this.router.navigate(['/login']);
     }
   }
