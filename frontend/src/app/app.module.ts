@@ -14,6 +14,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminTaskListComponent } from './components/admin-task-list/admin-task-list.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { NgChartsModule } from 'ng2-charts';
 import {
   LucideAngularModule,
@@ -57,6 +58,7 @@ import {
     AdminDashboardComponent,
     AdminTaskListComponent,
     SidebarComponent,
+    LandingPageComponent,
 
   ],
   imports: [

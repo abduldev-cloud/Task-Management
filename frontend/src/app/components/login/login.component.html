@@ -2,13 +2,10 @@
   <div class="auth-left">
     <div class="auth-left-content">
       <div class="auth-logo">
-        <div class="logo-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-          </svg>
+        <div class="logo-icon" routerLink="/">
+          <lucide-icon name="arrow-left" [size]="18" style="cursor: pointer;"></lucide-icon>
         </div>
-        <span>TaskFlow</span>
+        <span style="cursor: pointer;" routerLink="/">TaskFlow</span>
       </div>
       <h1>Welcome back</h1>
       <p>Sign in to manage your tasks, track progress, and collaborate with your team.</p>
